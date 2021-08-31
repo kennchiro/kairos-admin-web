@@ -27,16 +27,20 @@ class OrderCard extends StatelessWidget {
     required this.nomPropre,
   }) : super(key: key);
 
+  redirecTo(BuildContext context) {
+    Route route;
+    route = MaterialPageRoute(
+      builder: (_) => OrderDetailPage(
+          orderID: orderID, orderBy: orderBy, addressID: addressID),
+    );
+    Navigator.push(context, route);
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Route route;
-        route = MaterialPageRoute(
-          builder: (_) => OrderDetailPage(
-              orderID: orderID, orderBy: orderBy, addressID: addressID),
-        );
-        Navigator.push(context, route);
+        redirecTo(context);
       },
       child: Badge(
         elevation: 0,
@@ -55,8 +59,9 @@ class OrderCard extends StatelessWidget {
           },
           child: Row(
             children: [
-              Text("Client : " + nomPropre, style: TextStyle(color: Colors.white)),
-                SizedBox(width: 5),
+              Text("Client : " + nomPropre,
+                  style: TextStyle(color: Colors.white)),
+              SizedBox(width: 5),
               Text(
                 '- Date : ' +
                     DateFormat("dd MMMM, yyyy - hh:mm aa").format(
@@ -86,7 +91,10 @@ class OrderCard extends StatelessWidget {
               itemBuilder: (_, index) {
                 CartModel cartmodel =
                     CartModel.fromDocument(snapshotData[index]);
-                return ItemProductCardOrder(cartmodel: cartmodel);
+                return ItemProductCardOrder(
+                  cartmodel: cartmodel,
+                  redirecTo: ()=> redirecTo(context),
+                );
               }),
         ),
       ),

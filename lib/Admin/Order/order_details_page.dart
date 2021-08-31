@@ -9,6 +9,7 @@ import 'package:web_firebase/Admin/Order/widget/status_banner.dart';
 import 'package:web_firebase/Admin/Order/widget/user_address.dart';
 import 'package:web_firebase/Config/config.dart';
 import 'package:web_firebase/Widgets/colors.dart';
+import 'package:web_firebase/my_scaffold.dart';
 
 class OrderDetailPage extends StatefulWidget {
   final String? orderID;
@@ -29,24 +30,8 @@ class OrderDetailPage extends StatefulWidget {
 class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.SHADOW_RED1,
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        title: Center(
-          child: Text(
-            "Detail de la commande",
-            style: TextStyle(
-              fontSize: 28,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontFamily: "Signatra",
-            ),
-          ),
-        ),
-      ),
+    return MyScaffold(
+      route: '/orderDetaillePage',
       body: SingleChildScrollView(
         child: FutureBuilder<DocumentSnapshot>(
             future: FirebaseFirestore.instance

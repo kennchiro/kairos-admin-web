@@ -5,6 +5,7 @@ import 'package:web_firebase/Admin/Crud/Category/widget/alert_delete.dart';
 import 'package:web_firebase/Admin/Crud/Category/widget/item_image.dart';
 import 'package:web_firebase/Admin/Crud/crud_page_.dart';
 import 'package:web_firebase/Widgets/colors.dart';
+import 'package:web_firebase/my_scaffold.dart';
 
 class CategoryPage extends StatefulWidget {
   final String? categoryName;
@@ -58,28 +59,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColors.SHADOW_RED1,
-        title: Center(
-          child: Text(this.widget.categoryName!,
-              style: TextStyle(color: Colors.white)),
-        ),
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => CrudPage());
-              Navigator.pushReplacement(context, route);
-            }),
-        actions: [
-          Container(
-              margin: EdgeInsets.only(right: 40),
-              alignment: Alignment.center,
-              child: Text(count.toString(),
-                  style: TextStyle(color: Colors.white, fontSize: 20)))
-        ],
-      ),
+    return MyScaffold(
+      route: '/productDetail',
       body: SingleChildScrollView(
         child: FutureBuilder<QuerySnapshot>(
           future: documentList,

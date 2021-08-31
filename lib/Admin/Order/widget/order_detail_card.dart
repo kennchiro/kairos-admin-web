@@ -37,7 +37,10 @@ class OrderDetailCard extends StatelessWidget {
             itemBuilder: (_, index) {
               CartModel cartmodel =
                   CartModel.fromDocument(snapshotData[index]);
-              return ItemProductCardOrder(cartmodel: cartmodel);
+              return ItemProductCardOrder(
+                cartmodel: cartmodel, 
+                redirecTo: ()=> print(snapshotData.toString())
+              ,);
             }),
       ),
     );

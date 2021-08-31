@@ -39,6 +39,7 @@ dependencies:
   intl: 
   badges: ^2.0.1
   flutter_staggered_grid_view: ^0.4.0
+  flutter_admin_scaffold: ^1.0.0
 
   
 

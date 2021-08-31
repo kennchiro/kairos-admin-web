@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_firebase/Admin/Client/client_page.dart';
+import 'package:web_firebase/Admin/Crud/crud_page_.dart';
+import 'package:web_firebase/Admin/Home/admin_upload_items.dart';
+import 'package:web_firebase/Admin/Home/home_page.dart';
 import 'package:web_firebase/Admin/LoginPage/Admin_SignIn_Screen.dart';
+import 'package:web_firebase/Admin/Order/order_details_page.dart';
+import 'package:web_firebase/Admin/Order/order_page.dart';
 import 'package:web_firebase/Config/config.dart';
 import 'package:web_firebase/Provider/count_product.dart';
 import 'package:web_firebase/Widgets/colors.dart';
@@ -33,8 +39,48 @@ class MyApp extends StatelessWidget {
         home: LoginAdminPage(title: 'Kairos'),
         debugShowCheckedModeBanner: false,
         builder: EasyLoading.init(),
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          final page = _getPageWidget(settings);
+          if (page != null) {
+            return PageRouteBuilder(
+                settings: settings,
+                pageBuilder: (_, __, ___) => page,
+                transitionsBuilder: (_, anim, __, child) {
+                  return FadeTransition(
+                    opacity: anim,
+                    child: child,
+                  );
+                });
+          }
+          return null;
+        },
       ),
     );
+  }
+
+  Widget? _getPageWidget(RouteSettings settings) {
+    if (settings.name == null) {
+      return null;
+    }
+    final uri = Uri.parse(settings.name!);
+    switch (uri.path) {
+      case '/':
+        return AdminSignInScreen();
+      case '/homePage':
+        return HomePage();
+      case '/clientPage':
+        return ClientPage();
+      case '/orderPage':
+        return OrderPage();
+      case '/orderDetailPage':
+        return OrderDetailPage();
+      case '/productPage':
+        return CrudPage();
+      case '/addProductPage':
+        return UploadItems();
+    }
+    return null;
   }
 }
 

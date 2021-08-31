@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:web_firebase/Admin/Home/home_page.dart';
 import 'package:web_firebase/Admin/LoginPage/widget/custom_text_field.dart';
 import 'package:web_firebase/Widgets/colors.dart';
 
@@ -16,9 +15,10 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _passwordTextEditingController = TextEditingController();
 
   loginAdmin() async {
-
-     Route route = MaterialPageRoute(builder: (c) => HomePage());
-          Navigator.pushReplacement(context, route);
+     
+     Navigator.of(context).pushNamed('/homePage');
+    //  Route route = MaterialPageRoute(builder: (c) => HomePage());
+    //       Navigator.pushReplacement(context, route);
      
     // FirebaseFirestore.instance.collection("admins").get().then((QuerySnapshot snapshot) {
     //   snapshot.docs.forEach((result) {

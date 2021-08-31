@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:web_firebase/Admin/Client/widget/search_client.dart';
 import 'package:web_firebase/Admin/Client/widget/tile_user.dart';
-import 'package:web_firebase/Widgets/colors.dart';
+import 'package:web_firebase/my_scaffold.dart';
 
 class ClientPage extends StatefulWidget {
   @override
@@ -11,27 +10,9 @@ class ClientPage extends StatefulWidget {
 
 class _ClientPageState extends State<ClientPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.SHADOW_RED1,
-          elevation: 0,
-          title: Center(
-            child: Text(
-              "Clients",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: (){
-                 Route route = MaterialPageRoute(builder: (c) => SearchClient());
-                 Navigator.push(context, route);
-              },
-              icon: Icon(Icons.search, color: Colors.white,),
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) { 
+    return MyScaffold(
+        route: '/clientPage',
         body: StreamBuilder<QuerySnapshot>(
           stream:
               FirebaseFirestore.instance.collection("users").snapshots(),
