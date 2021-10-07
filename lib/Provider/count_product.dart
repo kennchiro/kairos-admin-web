@@ -23,9 +23,7 @@ class CountProd with ChangeNotifier, DiagnosticableTreeMixin {
         await FirebaseFirestore.instance.collection("adminOrders").get();
     List<DocumentSnapshot> _docSnap = _myDoc.docs;
     _countAdminOrders = _docSnap.length;
-    await Future.delayed(const Duration(microseconds: 100), () {
       notifyListeners();
-    });
   }
 
   //count client
