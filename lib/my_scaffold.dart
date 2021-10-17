@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:web_firebase/Widgets/colors.dart';
+import 'package:web_firebase/main.dart';
 
 class MyScaffold extends StatelessWidget {
   const MyScaffold({
@@ -83,9 +84,13 @@ class MyScaffold extends StatelessWidget {
               }).toList();
             },
             onSelected: (item) {
-              print(
-                  'actions: onSelected(): title = ${item.title}, route = ${item.route}');
-              Navigator.of(context).pushNamed(item.route!);
+              print('actions: onSelected(): title = ${item.title}, route = ${item.route}');
+              // Navigator.of(context).pushNamed(item.route!);
+              Navigator
+                  .of(context)
+                  .pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (context) => LoginAdminPage(title: 'kairos',)),
+                    (Route<dynamic> route) => false);
             },
           ),
         ],
