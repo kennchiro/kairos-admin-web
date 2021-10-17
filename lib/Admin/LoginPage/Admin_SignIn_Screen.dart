@@ -15,34 +15,28 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _passwordTextEditingController = TextEditingController();
 
   loginAdmin() async {
-     
-     Navigator.of(context).pushNamed('/homePage');
-    //  Route route = MaterialPageRoute(builder: (c) => HomePage());
-    //       Navigator.pushReplacement(context, route);
-     
-    // FirebaseFirestore.instance.collection("admins").get().then((QuerySnapshot snapshot) {
-    //   snapshot.docs.forEach((result) {
-    //     if (result.get('id') != _adminIDTextEditingController.text.trim()) {
-    //       EasyLoading.showInfo(
-    //         "Votre id est incorrect.",
-    //       );
-    //     } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
-    //       EasyLoading.showInfo(
-    //         "Votre mot de passe est incorrect.",
-    //       );
-    //     } else {
-    //       EasyLoading.showInfo(
-    //         "Bienvenu " + result.get("id"),
-    //       );
-    //       setState(() {
-    //         _adminIDTextEditingController.clear();
-    //         _passwordTextEditingController.clear();
-    //       });
-    //       Route route = MaterialPageRoute(builder: (c) => HomePage());
-    //       Navigator.pushReplacement(context, route);
-    //     }
-    //   });
-    // });
+    FirebaseFirestore.instance.collection("admin").get().then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((result) {
+        if (result.get('id') != _adminIDTextEditingController.text.trim()) {
+          EasyLoading.showInfo(
+            "Votre id est incorrect.",
+          );
+        } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
+          EasyLoading.showInfo(
+            "Votre mot de passe est incorrect.",
+          );
+        } else {
+          EasyLoading.showInfo(
+            "Bienvenu " + result.get("id"),
+          );
+          setState(() {
+            _adminIDTextEditingController.clear();
+            _passwordTextEditingController.clear();
+          });
+         Navigator.of(context).pushNamed('/homePage');
+        }
+      });
+    });
   }
 
   @override
