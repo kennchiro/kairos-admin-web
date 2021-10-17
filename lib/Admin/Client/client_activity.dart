@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:web_firebase/Widgets/colors.dart';
+import 'package:web_firebase/my_scaffold.dart';
 
 class ClientActivity extends StatefulWidget {
   final String name;
@@ -19,18 +18,14 @@ class ClientActivity extends StatefulWidget {
 class _ClientActivityState extends State<ClientActivity> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.SHADOW_RED1,
-        elevation: 0,
-        title: Center(
+    return MyScaffold(
+      route: '',
+      body:  Center(
           child: Text(
             this.widget.name,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
         ),
-        actions: [],
-      ),
     );
   }
 }

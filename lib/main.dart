@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (c) => CountProd()),
       ],
       child: MaterialApp(
-        title: 'Login Admin',
+        title: 'Admin Kairos',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
