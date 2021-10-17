@@ -60,7 +60,7 @@ class OrderCard extends StatelessWidget {
           child: Row(
             children: [
               Text("Client : " + nomPropre,
-                  style: TextStyle(color: Colors.white)),
+                  style: TextStyle(color: Colors.white, fontSize: 10)),
               SizedBox(width: 5),
               Text(
                 '- Date : ' +
@@ -69,7 +69,7 @@ class OrderCard extends StatelessWidget {
                         int.parse(dateCom),
                       ),
                     ),
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 10),
               ),
             ],
           ),
