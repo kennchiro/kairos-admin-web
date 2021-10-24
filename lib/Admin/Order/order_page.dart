@@ -32,61 +32,69 @@ class _OrderPageState extends State<OrderPage> {
   Widget build(BuildContext context) {
     return MyScaffold(
       route: '/orderPage',
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          OrderBarLateral(),
-          //
-          SingleChildScrollView(
-            child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection("adminOrders").snapshots(),
-                builder: (_, snapshot) {
-                  return LayoutBuilder(builder: (context, constraint) {
-                    return snapshot.hasData
-                        ? GridView.count(
-                            shrinkWrap: true,
-                            crossAxisCount: constraint.maxWidth < 768 ? 1 : 3,
-                            children:
-                                List.generate(snapshot.data!.docs.length, (index) {
-                              return FutureBuilder<QuerySnapshot>(
-                                  future: FirebaseFirestore.instance
-                                      .collection("adminOrders")
-                                      .doc(snapshot.data!.docs[index].get('orderBy'))
-                                      .collection("adminOrdersCart")
-                                      .where("shortInfo",
-                                          whereIn: snapshot.data!.docs[index]
-                                              .get(EcommerceApp.productID))
-                                      .get(),
-                                  builder: (_, snap) {
-                                    return snap.hasData
-                                        ? OrderCard(
-                                            itemCount: snap.data!.docs.length,
-                                            snapshotData: snap.data!.docs,
-                                            //
-                                            orderID: snapshot
-                                                .data!.docs[index].reference.id,
-                                            orderBy: snapshot.data!.docs[index]
-                                                .get('orderBy'),
-                                            addressID: snapshot.data!.docs[index]
-                                                .get('addressID'),
-                                            //
-                                            dateCom: snapshot.data!.docs[index]
-                                                .get('orderTime'),
-                                            nomPropre: snapshot.data!.docs[index]
-                                                .get('proprietaire'),
-                                          )
-                                        : Center(
-                                            child: CircularProgressIndicator(
-                                            color: Colors.green,
-                                          ));
-                                  });
-                            }))
-                        : Center(child: emptyOrderUser());
-                  });
-                }),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            OrderBarLateral(),
+            //
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  
+                  StreamBuilder<QuerySnapshot>(
+                      stream:
+                          FirebaseFirestore.instance.collection("adminOrders").snapshots(),
+                      builder: (_, snapshot) {
+                        return LayoutBuilder(builder: (context, constraint) {
+                          return snapshot.hasData
+                              ? GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount: constraint.maxWidth < 768 ? 1 : 3,
+                                  children:
+                                      List.generate(snapshot.data!.docs.length, (index) {
+                                    return FutureBuilder<QuerySnapshot>(
+                                        future: FirebaseFirestore.instance
+                                            .collection("adminOrders")
+                                            .doc(snapshot.data!.docs[index].get('orderBy'))
+                                            .collection("adminOrdersCart")
+                                            .where("shortInfo",
+                                                whereIn: snapshot.data!.docs[index]
+                                                    .get(EcommerceApp.productID))
+                                            .get(),
+                                        builder: (_, snap) {
+                                          return snap.hasData
+                                              ? OrderCard(
+                                                  itemCount: snap.data!.docs.length,
+                                                  snapshotData: snap.data!.docs,
+                                                  //
+                                                  orderID: snapshot
+                                                      .data!.docs[index].reference.id,
+                                                  orderBy: snapshot.data!.docs[index]
+                                                      .get('orderBy'),
+                                                  addressID: snapshot.data!.docs[index]
+                                                      .get('addressID'),
+                                                  //
+                                                  dateCom: snapshot.data!.docs[index]
+                                                      .get('orderTime'),
+                                                  nomPropre: snapshot.data!.docs[index]
+                                                      .get('proprietaire'),
+                                                )
+                                              : Center(
+                                                  child: CircularProgressIndicator(
+                                                  color: Colors.green,
+                                                ));
+                                        });
+                                  }))
+                              : Center(child: emptyOrderUser());
+                        });
+                      }),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
