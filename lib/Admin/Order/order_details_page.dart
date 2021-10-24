@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
 import 'package:web_firebase/Admin/Home/home_page.dart';
 import 'package:web_firebase/Admin/Model/address.dart';
 import 'package:web_firebase/Admin/Order/widget/details_paiement.dart';

@@ -68,7 +68,7 @@ class _DialogFormMotifState extends State<DialogFormMotif> {
                 this.widget.motifController.clear();
               });
             },
-            child: Text('Annuler', style: TextStyle(color: Colors.white))),
+            child: Text('Annuler', style: TextStyle(color: Colors.white, fontSize: 10))),
       ],
     );
 
@@ -86,7 +86,7 @@ class _DialogFormMotifState extends State<DialogFormMotif> {
       onPressed: ()=> _showFormDialog(),
       child: Text(
         'Annuler commande',
-        style: TextStyle(color: Colors.white, fontSize: 15),
+        style: TextStyle(color: Colors.white, fontSize: 10),
       ),
       color: Colors.red,
     );

@@ -83,7 +83,7 @@ void dispose() {
                             countShort: state.countClient.toString(),
                             iconShortCard: Icons.person_pin_sharp,
                             nameShortCard:
-                                state.countClient == 0 ? "Client" : "Clients",
+                                state.countClient == 0 ? "Client - Commande" : "Clients - Commande ",
                           );
                         },
                       ),
@@ -120,7 +120,7 @@ void dispose() {
                             colorShadow: AppColors.SHADOW_RED1,
                             countShort: state.countProd.toString(),
                             iconShortCard: Icons.archive,
-                            nameShortCard: "Voir, supprimer, modifier produit",
+                            nameShortCard: "Voir produits",
                           ),
                         );
                       },
