@@ -15,56 +15,58 @@ class _ClientPageState extends State<ClientPage> {
   Widget build(BuildContext context) {
     return MyScaffold(
         route: '/clientPage',
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ClientBarLateral(),
-            
-            //list client
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection("users").snapshots(),
-                builder: (_, snapshot) {
-                  return LayoutBuilder(builder: (context, constraint) {
-                    return snapshot.hasData
-                        ? GridView.count(
-                          shrinkWrap: true,
-                            crossAxisCount: 
-                            constraint.maxWidth < 768 ? 2 : 6,
-                            children: List.generate(snapshot.data!.docs.length,
-                                (index) {
-                              return StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(snapshot.data!.docs[index].get('uid'))
-                                      .collection('orders')
-                                      .snapshots(),
-                                  builder: (_, snaps) {
-                                    return TileUser(
-                                      imageUrl:
-                                          snapshot.data!.docs[index].get('url'),
-                                      userName:
-                                          snapshot.data!.docs[index].get('name'),
-                                      emailUser:
-                                          snapshot.data!.docs[index].get('email'),
-                                      uidUser:
-                                          snapshot.data!.docs[index].get('uid'),
-                                      countOrder: snaps.data!.docs.length,
-                                    );
-                                  });
-                            }),
-                          )
-                        : Center(
-                            child: CircularProgressIndicator(
-                            color: Colors.green,
-                          ));
-                  });
-                },
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ClientBarLateral(),
+              
+              //list client
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection("users").snapshots(),
+                  builder: (_, snapshot) {
+                    return LayoutBuilder(builder: (context, constraint) {
+                      return snapshot.hasData
+                          ? GridView.count(
+                            shrinkWrap: true,
+                              crossAxisCount: 
+                              constraint.maxWidth < 768 ? 2 : 6,
+                              children: List.generate(snapshot.data!.docs.length,
+                                  (index) {
+                                return StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(snapshot.data!.docs[index].get('uid'))
+                                        .collection('orders')
+                                        .snapshots(),
+                                    builder: (_, snaps) {
+                                      return TileUser(
+                                        imageUrl:
+                                            snapshot.data!.docs[index].get('url'),
+                                        userName:
+                                            snapshot.data!.docs[index].get('name'),
+                                        emailUser:
+                                            snapshot.data!.docs[index].get('email'),
+                                        uidUser:
+                                            snapshot.data!.docs[index].get('uid'),
+                                        countOrder: snaps.data!.docs.length,
+                                      );
+                                    });
+                              }),
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(
+                              color: Colors.green,
+                            ));
+                    });
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
