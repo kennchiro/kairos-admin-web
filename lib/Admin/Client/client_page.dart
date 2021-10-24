@@ -1,9 +1,8 @@
-import 'package:badges/badges.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:web_firebase/Admin/Client/widget/client_bar_lateral.dart';
 import 'package:web_firebase/Admin/Client/widget/tile_user.dart';
-import 'package:web_firebase/Widgets/colors.dart';
 import 'package:web_firebase/my_scaffold.dart';
 
 class ClientPage extends StatefulWidget {
@@ -32,7 +31,8 @@ class _ClientPageState extends State<ClientPage> {
                     return snapshot.hasData
                         ? GridView.count(
                           shrinkWrap: true,
-                            crossAxisCount: constraint.maxWidth < 768 ? 2 : 6,
+                            crossAxisCount: 
+                            constraint.maxWidth < 768 ? 2 : 6,
                             children: List.generate(snapshot.data!.docs.length,
                                 (index) {
                               return StreamBuilder<QuerySnapshot>(

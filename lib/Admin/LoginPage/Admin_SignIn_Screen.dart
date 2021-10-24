@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_firebase/Admin/LoginPage/widget/custom_text_field.dart';
@@ -15,7 +14,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _passwordTextEditingController = TextEditingController();
 
   loginAdmin() async {
-     Navigator.of(context).pushNamed('/homePage');
+    Navigator.of(context).pushNamed('/homePage');
     // FirebaseFirestore.instance.collection("admin").get().then((QuerySnapshot snapshot) {
     //   snapshot.docs.forEach((result) {
     //     if (result.get('id') != _adminIDTextEditingController.text.trim()) {
@@ -42,42 +41,40 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
-      child: Column(
+    child: LayoutBuilder(builder: (context, constraint) {
+      return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 200,
             decoration: new BoxDecoration(
-               image: DecorationImage(
-                  colorFilter: ColorFilter.srgbToLinearGamma(),
-                  image: AssetImage('images/admin.png'),
-                  fit: BoxFit.fitHeight,
-                ),
+              image: DecorationImage(
+                colorFilter: ColorFilter.srgbToLinearGamma(),
+                image: AssetImage('images/admin.png'),
+                fit: BoxFit.fitHeight,
+              ),
               gradient: new LinearGradient(
                 colors: [AppColors.LIGHT, AppColors.WHITE],
               ),
             ),
             alignment: Alignment.bottomCenter,
           ),
-           Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Admin",
-                  style: TextStyle(
-                    color: AppColors.PRIMARY_COLOR.withOpacity(0.6),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                  ),
-                ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Admin",
+              style: TextStyle(
+                color: AppColors.PRIMARY_COLOR.withOpacity(0.6),
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
               ),
+            ),
+          ),
           Container(
-            width: MediaQuery.of(context).size.width /2.5,
-            child:  Column(
-              mainAxisSize: MainAxisSize.max, children: [
-           
+            width: constraint.maxWidth > 768 ? 400 : 250,
+            child: Column(mainAxisSize: MainAxisSize.max, children: [
               Form(
                 key: _formKey,
                 child: Column(
@@ -124,7 +121,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             ]),
           ),
         ],
-      ),
-    );
+      );
+    }));
   }
 }
