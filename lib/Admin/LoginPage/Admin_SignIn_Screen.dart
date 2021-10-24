@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_firebase/Admin/LoginPage/widget/custom_text_field.dart';
@@ -14,29 +15,29 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _passwordTextEditingController = TextEditingController();
 
   loginAdmin() async {
-    Navigator.of(context).pushNamed('/homePage');
-    // FirebaseFirestore.instance.collection("admin").get().then((QuerySnapshot snapshot) {
-    //   snapshot.docs.forEach((result) {
-    //     if (result.get('id') != _adminIDTextEditingController.text.trim()) {
-    //       EasyLoading.showInfo(
-    //         "Votre id est incorrect.",
-    //       );
-    //     } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
-    //       EasyLoading.showInfo(
-    //         "Votre mot de passe est incorrect.",
-    //       );
-    //     } else {
-    //       EasyLoading.showInfo(
-    //         "Bienvenu " + result.get("id"),
-    //       );
-    //       setState(() {
-    //         _adminIDTextEditingController.clear();
-    //         _passwordTextEditingController.clear();
-    //       });
-    //      Navigator.of(context).pushNamed('/homePage');
-    //     }
-    //   });
-    // });
+    // Navigator.of(context).pushNamed('/homePage');
+    FirebaseFirestore.instance.collection("admin").get().then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((result) {
+        if (result.get('id') != _adminIDTextEditingController.text.trim()) {
+          EasyLoading.showInfo(
+            "Votre id est incorrect.",
+          );
+        } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
+          EasyLoading.showInfo(
+            "Votre mot de passe est incorrect.",
+          );
+        } else {
+          EasyLoading.showInfo(
+            "Bienvenu " + result.get("id"),
+          );
+          setState(() {
+            _adminIDTextEditingController.clear();
+            _passwordTextEditingController.clear();
+          });
+         Navigator.of(context).pushNamed('/homePage');
+        }
+      });
+    });
   }
 
   @override
