@@ -31,7 +31,9 @@ class OrderCard extends StatelessWidget {
     Route route;
     route = MaterialPageRoute(
       builder: (_) => OrderDetailPage(
-          orderID: orderID, orderBy: orderBy, addressID: addressID),
+          orderID: this.orderID, 
+          orderBy: this.orderBy, 
+          addressID: this.addressID),
     );
     Navigator.push(context, route);
   }

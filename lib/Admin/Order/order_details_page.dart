@@ -144,7 +144,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                           snapshot.data!.get('orderBy'));
                                     },
                                     child: Text(
-                                      'Confimer commande',
+                                      'Confimer commande ',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),
@@ -227,6 +227,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         .set({
       "facture": motifText.text.trim(),
       "Date-heure": DateTime.now().millisecondsSinceEpoch.toString(),
+      "emoji": false,
+      "notificationStatus": true
     });
 
     Route route = MaterialPageRoute(builder: (c) => HomePage());
@@ -285,6 +287,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       "facture":
           "Nous avons pris votre commande et payement, le livreur arrivera dans quelques minutes",
       "Date-heure": DateTime.now().millisecondsSinceEpoch.toString(),
+      "emoji": true,
+      "notificationStatus": true
     });
 
     Route route = MaterialPageRoute(builder: (c) => HomePage());

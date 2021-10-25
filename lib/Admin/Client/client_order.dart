@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:web_firebase/Admin/Client/widget/client_order_card.dart';
 import 'package:web_firebase/Config/config.dart';
 import 'package:web_firebase/Widgets/colors.dart';
-
 import 'package:web_firebase/my_scaffold.dart';
 
 class ClientOrder extends StatelessWidget {
@@ -106,8 +105,7 @@ class ClientOrder extends StatelessWidget {
                                               itemCount: snaps.data!.docs.length,
                                               snapshotData: snaps.data!.docs,
                                               //
-                                              orderID: snapshot
-                                                  .data!.docs[index].reference.id,
+                                              orderID: snapshot.data!.docs[index].reference.id,
                                               orderBy: this.uid,
                                               dateCom: snapshot.data!.docs[index]
                                                   .get('orderTime'),

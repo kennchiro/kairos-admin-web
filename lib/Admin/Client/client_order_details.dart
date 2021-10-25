@@ -1,22 +1,17 @@
-import 'package:barcode_widget/barcode_widget.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
-import 'package:web_firebase/Admin/Client/client_page.dart';
-import 'package:web_firebase/Admin/Client/widget/client_order.dart';
-
+import 'package:web_firebase/Admin/Client/widget/client_shipping_details.dart';
+import 'package:web_firebase/Admin/Client/widget/client_status_banner.dart';
 import 'package:web_firebase/Admin/Home/home_page.dart';
 import 'package:web_firebase/Admin/Model/address.dart';
 import 'package:web_firebase/Admin/Order/widget/details_paiement.dart';
 import 'package:web_firebase/Admin/Order/widget/dialogFormMotif.dart';
 import 'package:web_firebase/Admin/Order/widget/order_detail_card.dart';
 import 'package:web_firebase/Config/config.dart';
-import 'package:web_firebase/Widgets/colors.dart';
 import 'package:web_firebase/my_scaffold.dart';
 
-String getOrderId = "";
 
 class ClientOrderDetails extends StatefulWidget {
   final String orderID;
@@ -48,8 +43,7 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
 
   @override
   Widget build(BuildContext context) {
-    getOrderId = this.widget.orderID;
-
+   
     return MyScaffold(
       route: '',
       body: SingleChildScrollView(
@@ -65,7 +59,7 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
                 ? Container(
                     child: Column(
                       children: [
-                        StatusBanner(
+                        ClientStatusBanner(
                           status: snapshotOr.data!.get('isSuccess'),
                         ),
                         // Adresse + qrCode
@@ -78,9 +72,9 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
                                 .get(),
                             builder: (context, snapshotAd) {
                               return snapshotAd.hasData
-                                  ? ShippingDetails(
-                                      model: AddressModel.fromDocument(
-                                          snapshotAd.data!),
+                                  ? ClientShippingDetails(
+                                      userUID: this.widget.userUid,
+                                      model: AddressModel.fromDocument(snapshotAd.data!),
                                     )
                                   : Center(
                                       child: CircularProgressIndicator(
@@ -162,12 +156,12 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
                                   onPressed: () {
                                     confirmeParcelShifted(
                                       context,
-                                      getOrderId,
+                                      this.widget.orderID,
                                       this.widget.userUid,
                                     );
                                   },
                                   child: Text(
-                                    'Confimer commande',
+                                    'Confimer commande ',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 10),
                                   ),
@@ -178,7 +172,9 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
                                 DialogFormMotif(
                                   motifController: motifText,
                                   okFormMotif: () {
-                                    cancelOrder(context, getOrderId,
+                                    cancelOrder(
+                                        context, 
+                                        this.widget.orderID,
                                         this.widget.userUid);
                                   },
                                 )
@@ -235,7 +231,7 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
         .collection("userCartListOrdersMap")
         .get()
         .then((value) {
-      for (DocumentSnapshot ds in value.docs) {
+       for (DocumentSnapshot ds in value.docs) {
         ds.reference.delete();
       }
     });
@@ -249,6 +245,8 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
         .set({
       "facture": motifText.text.trim(),
       "Date-heure": DateTime.now().millisecondsSinceEpoch.toString(),
+      "emoji": false,
+      "notificationStatus": true
     });
 
     Route route = MaterialPageRoute(builder: (c) => HomePage());
@@ -307,6 +305,8 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
       "facture":
           "Nous avons pris votre commande et payement, le livreur arrivera dans quelques minutes",
       "Date-heure": DateTime.now().millisecondsSinceEpoch.toString(),
+      "emoji": true,
+      "notificationStatus": true
     });
 
     Route route = MaterialPageRoute(builder: (c) => HomePage());
@@ -315,156 +315,3 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
   }
 }
 
-class StatusBanner extends StatelessWidget {
-  final bool status;
-
-
-  const StatusBanner({
-    Key? key,
-    required this.status,
-
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    String message;
-    IconData iconData;
-
-
-    status ? iconData = Icons.done : iconData = Icons.cancel;
-    status ? message = 'succès' : message = 'Unsuccessful';
-
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 50,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.grey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //
-          Container(
-            height: 50,
-            width: 100,
-            color: AppColors.SHADOW_RED1,
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Route route;
-                      route = MaterialPageRoute(
-                        builder: (_) => ClientPage(),
-                      );
-                      Navigator.pushReplacement(context, route);
-                    },
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    )),
-                Text(
-                  'retour',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-
-          //
-          Center(
-            child: Row(
-              children: [
-                Text(
-                  'Commande a été passée avec $message',
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                CircleAvatar(
-                    radius: 8,
-                    backgroundColor: AppColors.WHITE,
-                    child: Center(
-                      child: Icon(
-                        iconData,
-                        color: AppColors.GREEN,
-                        size: 14,
-                      ),
-                    )),
-              ],
-            ),
-          ),
-
-          Text(''),
-        ],
-      ),
-    );
-  }
-}
-
-class ShippingDetails extends StatefulWidget {
-  final AddressModel model;
-
-  const ShippingDetails({
-    Key? key,
-    required this.model,
-  }) : super(key: key);
-
-  @override
-  _ShippingDetailsState createState() => _ShippingDetailsState();
-}
-
-class _ShippingDetailsState extends State<ShippingDetails> {
-  @override
-  Widget build(BuildContext context) {
-    double _screenWidth = MediaQuery.of(context).size.width;
-    DateTime now = DateTime.now();
-    String formateDate = DateFormat('EEE d MMM').format(now);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(height: 1 * PdfPageFormat.cm),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            //Supplier address
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.model.name!,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-                SizedBox(height: 1 * PdfPageFormat.mm),
-                Text("${widget.model.flatNumber}, ${widget.model.quartier}",
-                    style: TextStyle(fontSize: 11)),
-                Text("${widget.model.city}", style: TextStyle(fontSize: 11)),
-                SizedBox(height: 1 * PdfPageFormat.mm),
-                Text("${widget.model.phoneNumber}",
-                    style: TextStyle(fontSize: 11)),
-              ],
-            ),
-            Column(
-              children: [
-                Text('ID', style: TextStyle(fontSize: 11)),
-                Container(
-                  height: 50,
-                  width: 50,
-                  child: BarcodeWidget(
-                    barcode: Barcode.qrCode(),
-                    data: getOrderId,
-                  ),
-                ),
-                SizedBox(height: 2 * PdfPageFormat.mm),
-                Text(formateDate + ', Fianarantsoa',
-                    style: TextStyle(fontSize: 11)),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(height: 1 * PdfPageFormat.cm),
-      ],
-    );
-  }
-}
