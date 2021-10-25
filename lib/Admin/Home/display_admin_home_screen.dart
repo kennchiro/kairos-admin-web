@@ -59,6 +59,8 @@ void dispose() {
                             Navigator.of(context).pushNamed('/orderPage');
                           },
                           child: ShortCard(
+                            miniCardColor: Colors.blue,
+                            showMiniCard: true,
                             colorShortCard: Colors.blue.withOpacity(0.9),
                             colorShadow: Colors.blue,
                             countShort: state.countAdminOrders.toString(),
@@ -78,12 +80,14 @@ void dispose() {
                       child: Consumer<CountProd>(
                         builder: (context, state, _) {
                           return ShortCard(
+                            miniCardColor: Colors.orange,
+                            showMiniCard: true,
                             colorShortCard: Colors.orange.withOpacity(0.9),
                             colorShadow: Colors.orange,
                             countShort: state.countClient.toString(),
                             iconShortCard: Icons.person_pin_sharp,
                             nameShortCard:
-                                state.countClient == 0 ? "Client - Commande" : "Clients - Commande ",
+                                state.countClient == 0 ? "Client - Commande - Message" : "Clients - Commande - Message ",
                           );
                         },
                       ),
@@ -100,6 +104,8 @@ void dispose() {
                         Navigator.of(context).pushNamed('/addProductPage');
                       },
                       child: ShortCard(
+                        miniCardColor: Colors.green,
+                        showMiniCard: false,
                         colorShortCard: Colors.green.withOpacity(0.9),
                         colorShadow: Colors.green,
                         countShort: "",
@@ -115,6 +121,8 @@ void dispose() {
                             Navigator.of(context).pushNamed('/productPage');
                           },
                           child: ShortCard(
+                            miniCardColor: AppColors.SHADOW_RED1,
+                            showMiniCard: true,
                             colorShortCard:
                                 AppColors.SHADOW_RED1.withOpacity(0.9),
                             colorShadow: AppColors.SHADOW_RED1,

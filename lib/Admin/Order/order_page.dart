@@ -48,11 +48,11 @@ class _OrderPageState extends State<OrderPage> {
                           .snapshots(),
                       builder: (_, snapshot) {
                         return LayoutBuilder(builder: (context, constraint) {
-                          if (constraint.maxHeight < 768) {
+                          if (constraint.maxWidth > 768) {
                             return snapshot.hasData
                                 ? GridView.count(
                                     shrinkWrap: true,
-                                    crossAxisCount: 3,
+                                    crossAxisCount: 4,
                                     children: List.generate(
                                         snapshot.data!.docs.length, (index) {
                                       return FutureBuilder<QuerySnapshot>(
@@ -70,10 +70,8 @@ class _OrderPageState extends State<OrderPage> {
                                           builder: (_, snap) {
                                             return snap.hasData
                                                 ? OrderCard(
-                                                    itemCount:
-                                                        snap.data!.docs.length,
-                                                    snapshotData:
-                                                        snap.data!.docs,
+                                                    itemCount: snap.data!.docs.length,
+                                                    snapshotData: snap.data!.docs,
                                                     //
                                                     orderID: snapshot
                                                         .data!

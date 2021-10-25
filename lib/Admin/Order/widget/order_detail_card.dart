@@ -33,7 +33,8 @@ class OrderDetailCard extends StatelessWidget {
         height: itemCount * 150.0,
         child: ListView.builder(
             itemCount: itemCount,
-            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            // physics: NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               CartModel cartmodel =
                   CartModel.fromDocument(snapshotData[index]);

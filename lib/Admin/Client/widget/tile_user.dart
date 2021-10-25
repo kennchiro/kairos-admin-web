@@ -69,6 +69,7 @@ class _TileUserState extends State<TileUser> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // commande
                               IconButton(
                                 onPressed: () {
                                   Route route = MaterialPageRoute(
@@ -108,6 +109,19 @@ class _TileUserState extends State<TileUser> {
                                             ),
                                           )),
                               ),
+                                //message
+                              IconButton(
+                                onPressed: () {},
+                                icon: Tooltip(
+                                  message: 'Message',
+                                  child: Icon(
+                                    Icons.message,
+                                    color: AppColors.PRIMARY_COLOR,
+                                  ),
+                                ),
+                              ),
+                               
+                              //activity
                               IconButton(
                                 onPressed: () {},
                                 icon: Tooltip(
@@ -118,6 +132,7 @@ class _TileUserState extends State<TileUser> {
                                   ),
                                 ),
                               ),
+
                             ],
                           )
                         ],

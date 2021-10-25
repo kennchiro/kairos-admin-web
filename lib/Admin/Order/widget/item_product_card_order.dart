@@ -18,7 +18,7 @@ class ItemProductCardOrder extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return MaterialButton(
-      padding: const EdgeInsets.all(0),
+      padding: const EdgeInsets.all(3),
       elevation: 5.0,
       color: AppColors.WHITE,
       clipBehavior: Clip.antiAlias,
