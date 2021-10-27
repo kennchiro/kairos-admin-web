@@ -15,7 +15,22 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _adminIDTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
 
-  timeOut() {
+  passwordNotCorrect() async {
+    EasyLoading.showInfo("Votre mot de passe est incorrect.");
+    setState(() {
+      _passwordTextEditingController.clear();
+    });
+  }
+
+  idNotCorrect() async {
+    EasyLoading.showInfo("Votre id est incorrect.");
+    setState(() {
+      _adminIDTextEditingController.clear();
+      _passwordTextEditingController.clear();
+    });
+  }
+
+  timeOut() async {
     EasyLoading.showInfo("Veuillez verifier votre connexion");
     Navigator.pop(context);
   }
@@ -25,23 +40,20 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
         context: context,
         builder: (c) {
           return LoadingAlertDialog();
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
+        }).timeout(const Duration(seconds: 15), onTimeout: () {
       return timeOut();
     });
+
     //  Navigator.of(context).pushNamed('/homePage');
     await FirebaseFirestore.instance
         .collection("admin")
         .get()
         .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((result) {
+        snapshot.docs.forEach((result) {
         if (result.get('id') != _adminIDTextEditingController.text.trim()) {
-          EasyLoading.showInfo(
-            "Votre id est incorrect.",
-          );
-        } else if (result.get("password") !=  _passwordTextEditingController.text.trim()) {
-          EasyLoading.showInfo(
-            "Votre mot de passe est incorrect.",
-          );
+          idNotCorrect();
+        } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
+          passwordNotCorrect();
         } else {
           EasyLoading.showSuccess(
             "Bienvenu " + result.get("id"),
