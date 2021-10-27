@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_firebase/Admin/LoginPage/widget/custom_text_field.dart';
+import 'package:web_firebase/Admin/LoginPage/widget/loading_alert_dialog.dart';
 import 'package:web_firebase/Widgets/colors.dart';
 
 class AdminSignInScreen extends StatefulWidget {
@@ -14,27 +15,42 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final _adminIDTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
 
+  timeOut() {
+    EasyLoading.showInfo("Veuillez verifier votre connexion");
+    Navigator.pop(context);
+  }
+
   loginAdmin() async {
-    // Navigator.of(context).pushNamed('/homePage');
-    FirebaseFirestore.instance.collection("admin").get().then((QuerySnapshot snapshot) {
+    showDialog(
+        context: context,
+        builder: (c) {
+          return LoadingAlertDialog();
+        }).timeout(const Duration(seconds: 10), onTimeout: () {
+      return timeOut();
+    });
+    //  Navigator.of(context).pushNamed('/homePage');
+    await FirebaseFirestore.instance
+        .collection("admin")
+        .get()
+        .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((result) {
         if (result.get('id') != _adminIDTextEditingController.text.trim()) {
           EasyLoading.showInfo(
             "Votre id est incorrect.",
           );
-        } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
+        } else if (result.get("password") !=  _passwordTextEditingController.text.trim()) {
           EasyLoading.showInfo(
             "Votre mot de passe est incorrect.",
           );
         } else {
-          EasyLoading.showInfo(
+          EasyLoading.showSuccess(
             "Bienvenu " + result.get("id"),
           );
           setState(() {
             _adminIDTextEditingController.clear();
             _passwordTextEditingController.clear();
           });
-         Navigator.of(context).pushNamed('/homePage');
+          Navigator.of(context).pushNamed('/homePage');
         }
       });
     });
@@ -43,7 +59,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-    child: LayoutBuilder(builder: (context, constraint) {
+        child: LayoutBuilder(builder: (context, constraint) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

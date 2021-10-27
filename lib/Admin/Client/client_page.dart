@@ -20,7 +20,6 @@ class _ClientPageState extends State<ClientPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClientBarLateral(),
-              
               //list client
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,

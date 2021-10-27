@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:web_firebase/Widgets/colors.dart';
 
 class ShortCard extends StatelessWidget {
 
