@@ -23,7 +23,7 @@ class StatusBanner extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Commande Shipped $message',
+            'Command Shipped $message',
             style: TextStyle(
               color: AppColors.WHITE,
             ),

@@ -21,7 +21,10 @@ Future<void> main() async {
   await Firebase.initializeApp();
   EcommerceApp.firestore = FirebaseFirestore.instance;
   EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.blue,
+ ));
   runApp(MyApp());
 }
 

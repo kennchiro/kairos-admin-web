@@ -9,12 +9,14 @@ class ClientOrder extends StatelessWidget {
   final String uid;
   final String username;
   final int countOrder;
+  final String emailUser;
 
   const ClientOrder({
     Key? key,
     required this.uid,
     required this.username,
     required this.countOrder,
+    required this.emailUser,
   }) : super(key: key);
 
   @override
@@ -66,7 +68,7 @@ class ClientOrder extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Client : ${this.username}',
+                          'Client : ${this.username} - ${this.emailUser}',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -74,7 +76,7 @@ class ClientOrder extends StatelessWidget {
                   ],
                 ),
               ),
-        
+
               // order
               SingleChildScrollView(
                 child: Column(
@@ -102,12 +104,15 @@ class ClientOrder extends StatelessWidget {
                                     builder: (_, snaps) {
                                       return snaps.hasData
                                           ? ClientOrderCard(
-                                              itemCount: snaps.data!.docs.length,
+                                              itemCount:
+                                                  snaps.data!.docs.length,
                                               snapshotData: snaps.data!.docs,
                                               //
-                                              orderID: snapshot.data!.docs[index].reference.id,
+                                              orderID: snapshot.data!
+                                                  .docs[index].reference.id,
                                               orderBy: this.uid,
-                                              dateCom: snapshot.data!.docs[index]
+                                              dateCom: snapshot
+                                                  .data!.docs[index]
                                                   .get('orderTime'),
                                             )
                                           : Center(

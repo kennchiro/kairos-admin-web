@@ -77,6 +77,7 @@ class _TileUserState extends State<TileUser> {
                                             uid: this.widget.uidUser,
                                             username: this.widget.userName,
                                             countOrder: this.widget.countOrder,
+                                            emailUser: this.widget.emailUser,
                                           ));
                                   Navigator.pushReplacement(context, route);
                                 },
