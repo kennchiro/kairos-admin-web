@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   EcommerceApp.firestore = FirebaseFirestore.instance;
   EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
+  SystemChrome.setEnabledSystemUIOverlays([]);
   runApp(MyApp());
 }
 

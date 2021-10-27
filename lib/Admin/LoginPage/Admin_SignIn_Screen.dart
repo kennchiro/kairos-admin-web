@@ -40,8 +40,6 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
         context: context,
         builder: (c) {
           return LoadingAlertDialog();
-        }).timeout(const Duration(seconds: 15), onTimeout: () {
-      return timeOut();
     });
 
     //  Navigator.of(context).pushNamed('/homePage');
@@ -49,10 +47,11 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
         .collection("admin")
         .get()
         .then((QuerySnapshot snapshot) {
-        snapshot.docs.forEach((result) {
+      snapshot.docs.forEach((result) {
         if (result.get('id') != _adminIDTextEditingController.text.trim()) {
-          idNotCorrect();
-        } else if (result.get("password") != _passwordTextEditingController.text.trim()) {
+          EasyLoading.showInfo("Votre id est incorrect.");
+        } else if (result.get("password") !=
+            _passwordTextEditingController.text.trim()) {
           passwordNotCorrect();
         } else {
           EasyLoading.showSuccess(
@@ -65,6 +64,8 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
           Navigator.of(context).pushNamed('/homePage');
         }
       });
+    }).timeout(const Duration(seconds: 15), onTimeout: () {
+      return timeOut();
     });
   }
 
