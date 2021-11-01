@@ -28,7 +28,6 @@ class OrderDetailPage extends StatefulWidget {
 }
 
 class _OrderDetailPageState extends State<OrderDetailPage> {
-
   final motifText = TextEditingController();
 
   @override
@@ -134,7 +133,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                             child: Center(
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   MaterialButton(
                                     onPressed: () {
@@ -180,7 +180,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   //annuler la commande
   cancelOrder(BuildContext context, String mOrderId, String userUid) {
     // supprimer/confirmer les commandes du client/Id
-    FirebaseFirestore.instance.collection("adminOrders").doc(mOrderId).delete();
+    FirebaseFirestore.instance
+    .collection("adminOrders")
+    .where("orderBy", isEqualTo: userUid)
+    .get().then((value) {
+       for (DocumentSnapshot ds in value.docs) {
+        ds.reference.delete();
+      }
+    });
 
     //Confirmer tous les commande dans le cart Map
     FirebaseFirestore.instance
@@ -239,7 +246,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   // confirmer la commande
   confirmeParcelShifted(BuildContext context, String mOrderId, String userUid) {
     // supprimer/confirmer les commandes du client/Id
-    FirebaseFirestore.instance.collection("adminOrders").doc(mOrderId).delete();
+    FirebaseFirestore.instance
+    .collection("adminOrders")
+    .where("orderBy", isEqualTo: userUid)
+    .get().then((value) {
+       for (DocumentSnapshot ds in value.docs) {
+        ds.reference.delete();
+      }
+    });
 
     //Confirmer tous les commande dans le cart Map
     FirebaseFirestore.instance

@@ -198,7 +198,14 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
   //annuler la commande
   cancelOrder(BuildContext context, String mOrderId, String userUid) {
     // supprimer/confirmer les commandes du client/Id
-    FirebaseFirestore.instance.collection("adminOrders").doc(mOrderId).delete();
+     FirebaseFirestore.instance
+    .collection("adminOrders")
+    .where("orderBy", isEqualTo: userUid)
+    .get().then((value) {
+       for (DocumentSnapshot ds in value.docs) {
+        ds.reference.delete();
+      }
+    });
 
     //Confirmer tous les commande dans le cart Map
     FirebaseFirestore.instance
@@ -257,7 +264,14 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
   // confirmer la commande
   confirmeParcelShifted(BuildContext context, String mOrderId, String userUid) {
     // supprimer/confirmer les commandes du client/Id
-    FirebaseFirestore.instance.collection("adminOrders").doc(mOrderId).delete();
+     FirebaseFirestore.instance
+    .collection("adminOrders")
+    .where("orderBy", isEqualTo: userUid)
+    .get().then((value) {
+       for (DocumentSnapshot ds in value.docs) {
+        ds.reference.delete();
+      }
+    });
 
     //Confirmer tous les commande dans le cart Map
     FirebaseFirestore.instance

@@ -24,9 +24,8 @@ class _ClientPageState extends State<ClientPage> {
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: StreamBuilder<QuerySnapshot>(
-                  stream:
-                      FirebaseFirestore.instance.collection("users").snapshots(),
-                  builder: (_, snapshot) {
+                  stream: FirebaseFirestore.instance.collection("users").snapshots(),
+                   builder: (_, snapshot) {
                     return LayoutBuilder(builder: (context, constraint) {
                       return snapshot.hasData
                           ? GridView.count(
