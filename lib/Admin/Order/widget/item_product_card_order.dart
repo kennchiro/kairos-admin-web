@@ -15,7 +15,6 @@ class ItemProductCardOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
 
     return MaterialButton(
       padding: const EdgeInsets.all(3),
@@ -32,7 +31,7 @@ class ItemProductCardOrder extends StatelessWidget {
             height: 110,
             width: 100,
             child: Image.network(
-              this.cartmodel.thumbnailUrl!,
+              this.cartmodel.thumbnailUrl,
               width: 100.0,
               height: 110.0,
               fit: BoxFit.cover,
@@ -52,7 +51,7 @@ class ItemProductCardOrder extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        this.cartmodel.title!,
+                        this.cartmodel.title,
                         style: TextStyle(color: Colors.black87, fontSize: 13),
                       ),
                       SizedBox(
@@ -60,7 +59,7 @@ class ItemProductCardOrder extends StatelessWidget {
                       ),
                       Text(
                         // model.shortInfo
-                        this.cartmodel.shortInfo!,
+                        this.cartmodel.shortInfo,
                         style: TextStyle(color: Colors.black54, fontSize: 13),
                       ),
                       SizedBox(
@@ -83,7 +82,7 @@ class ItemProductCardOrder extends StatelessWidget {
                           color: AppColors.SHADOW,
                         ),
                         child: Text(
-                          this.cartmodel.quantity! > 1
+                          this.cartmodel.quantity > 1
                               ? "quantités : ${this.cartmodel.quantity}"
                               : "quantité : ${this.cartmodel.quantity}",
                           style: TextStyle(fontSize: 13, color: Colors.black45),

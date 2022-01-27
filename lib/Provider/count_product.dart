@@ -2,6 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class CountProd with ChangeNotifier, DiagnosticableTreeMixin {
+  CountProd() {
+    countDocumentsAdminOrder();
+    countDocumentsProd();
+    countDocumentsClient();
+  }
+  
   // Product
   int _countProd = 0;
   int get countProd => _countProd;
@@ -15,7 +21,7 @@ class CountProd with ChangeNotifier, DiagnosticableTreeMixin {
     });
   }
 
-  //Admin Orders 
+  //Admin Orders
   int _countAdminOrders = 0;
   int get countAdminOrders => _countAdminOrders;
   Future<void> countDocumentsAdminOrder() async {
@@ -23,7 +29,7 @@ class CountProd with ChangeNotifier, DiagnosticableTreeMixin {
         await FirebaseFirestore.instance.collection("adminOrders").get();
     List<DocumentSnapshot> _docSnap = _myDoc.docs;
     _countAdminOrders = _docSnap.length;
-      notifyListeners();
+    notifyListeners();
   }
 
   //count client
@@ -38,5 +44,4 @@ class CountProd with ChangeNotifier, DiagnosticableTreeMixin {
       notifyListeners();
     });
   }
-
 }

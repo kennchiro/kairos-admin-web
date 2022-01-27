@@ -21,7 +21,7 @@ class ClientShippingDetails extends StatefulWidget {
 class _ClientShippingDetailsState extends State<ClientShippingDetails> {
   @override
   Widget build(BuildContext context) {
-    double _screenWidth = MediaQuery.of(context).size.width;
+
     DateTime now = DateTime.now();
     String formateDate = DateFormat('EEE d MMM').format(now);
 
@@ -37,7 +37,7 @@ class _ClientShippingDetailsState extends State<ClientShippingDetails> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.model.name!,
+                Text(widget.model.name,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                 SizedBox(height: 1 * PdfPageFormat.mm),

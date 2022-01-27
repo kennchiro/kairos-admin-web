@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:web_firebase/Admin/Model/cart.dart';
@@ -9,7 +8,7 @@ import 'package:web_firebase/Widgets/colors.dart';
 
 class OrderCard extends StatelessWidget {
   final int itemCount;
-  final List<DocumentSnapshot<Object?>> snapshotData;
+  final List<dynamic> snapshotData;
   final String orderID;
   final String addressID;
   final String orderBy;
@@ -90,9 +89,10 @@ class OrderCard extends StatelessWidget {
           child: ListView.builder(
               itemCount: itemCount,
               scrollDirection: Axis.vertical,
+              // physics: NeverScrollableScrollPhysics(),
               itemBuilder: (_, index) {
                 CartModel cartmodel =
-                    CartModel.fromDocument(snapshotData[index]);
+                    CartModel.fromJson(snapshotData[index]);
                 return ItemProductCardOrder(
                   cartmodel: cartmodel,
                   redirecTo: ()=> redirecTo(context),

@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'package:web_firebase/Admin/Model/cart.dart';
 import 'package:web_firebase/Admin/Order/widget/item_product_card_order.dart';
 import 'package:web_firebase/Widgets/colors.dart';
@@ -8,7 +7,7 @@ import 'package:web_firebase/Widgets/colors.dart';
 class OrderDetailCard extends StatelessWidget {
 
   final int itemCount;
-  final List<DocumentSnapshot> snapshotData;
+  final List<dynamic> snapshotData;
 
   const OrderDetailCard({
     Key? key,
@@ -37,7 +36,7 @@ class OrderDetailCard extends StatelessWidget {
             // physics: NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               CartModel cartmodel =
-                  CartModel.fromDocument(snapshotData[index]);
+                  CartModel.fromJson(snapshotData[index]);
               return ItemProductCardOrder(
                 cartmodel: cartmodel, 
                 redirecTo: ()=> print(snapshotData.toString())

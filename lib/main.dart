@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_firebase/Admin/Client/Provider/ClientProvider.dart';
 import 'package:web_firebase/Admin/Client/client_page.dart';
 import 'package:web_firebase/Admin/Crud/crud_page_.dart';
 import 'package:web_firebase/Admin/Home/admin_upload_items.dart';
 import 'package:web_firebase/Admin/Home/home_page.dart';
 import 'package:web_firebase/Admin/LoginPage/Admin_SignIn_Screen.dart';
+import 'package:web_firebase/Admin/Order/Provider/OrderProvider.dart';
 import 'package:web_firebase/Admin/Order/order_details_page.dart';
 import 'package:web_firebase/Admin/Order/order_page.dart';
 import 'package:web_firebase/Config/config.dart';
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (c) => CountProd()),
+        ChangeNotifierProvider(create: (c) => ClientProvider()),
+        ChangeNotifierProvider(create: (c) => OrderProvider()),
       ],
       child: MaterialApp(
         title: 'Admin Kairos',

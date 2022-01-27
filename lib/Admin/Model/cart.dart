@@ -2,20 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CartModel with ChangeNotifier {
-  String? title;
-  String? shortInfo;
-  int? price;
-  int? quantity;
-  String? thumbnailUrl;
-  String? reduction;
+  String title;
+  String shortInfo;
+  int price;
+  int quantity;
+  String thumbnailUrl;
+  String reduction;
 
-  CartModel(
-      {this.title,
-      this.shortInfo,
-      this.price,
-      this.quantity,
-      this.thumbnailUrl,
-      this.reduction});
+  CartModel({
+    required this.title,
+    required this.shortInfo,
+    required this.price,
+    required this.quantity,
+    required this.thumbnailUrl,
+    required this.reduction
+  });
 
 
   factory CartModel.fromDocument(DocumentSnapshot doc) {
@@ -28,18 +29,16 @@ class CartModel with ChangeNotifier {
      reduction: doc.get('reduction'),
     );
   }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['shortInfo'] = this.shortInfo;
-    data['price'] = this.price;
-    this.quantity == null || this.quantity == 0
-        ? data['quantity'] = 1
-        : data['quantity'] = this.quantity;
-    data['quantity'] = this.quantity;
-    data['thumbnailUrl'] = this.thumbnailUrl;
-    data['reduction'] = this.reduction;
-    return data;
+  
+   factory CartModel.fromJson(Map<dynamic, dynamic> json) {
+    return CartModel(
+      title: json['title'],
+      shortInfo: json['shortInfo'],
+      price: json['price'],
+      quantity: json['quantity'],
+      thumbnailUrl: json['thumbnailUrl'],
+      reduction: json['reduction'],
+    );
   }
+
 }

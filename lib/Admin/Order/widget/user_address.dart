@@ -17,7 +17,7 @@ class UserAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _screenWidth = MediaQuery.of(context).size.width;
+
     DateTime now = DateTime.now();
     String formateDate = DateFormat('EEE d MMM').format(now);
 
@@ -33,7 +33,7 @@ class UserAddress extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(model.name!,
+                Text(model.name,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                 SizedBox(height: 1 * PdfPageFormat.mm),

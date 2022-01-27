@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:web_firebase/Admin/Client/Provider/ClientProvider.dart';
 import 'package:web_firebase/Admin/Client/widget/client_order_card.dart';
-import 'package:web_firebase/Config/config.dart';
 import 'package:web_firebase/Widgets/colors.dart';
 import 'package:web_firebase/my_scaffold.dart';
 
@@ -82,44 +83,31 @@ class ClientOrder extends StatelessWidget {
                 child: Column(
                   children: [
                     StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(this.uid)
-                            .collection('orders')
-                            .snapshots(),
+                        stream:
+                            Provider.of<ClientProvider>(context, listen: false)
+                                .getOrderUserByID(this.uid),
                         builder: (context, snapshot) {
                           return ListView.builder(
                               shrinkWrap: true,
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (_, index) {
-                                return FutureBuilder<QuerySnapshot>(
-                                    future: FirebaseFirestore.instance
-                                        .collection('users')
-                                        .doc(this.uid)
-                                        .collection('userCartListOrdersMap')
-                                        .where("shortInfo",
-                                            whereIn: snapshot.data!.docs[index]
-                                                .get(EcommerceApp.productID))
-                                        .get(),
-                                    builder: (_, snaps) {
-                                      return snaps.hasData
-                                          ? ClientOrderCard(
-                                              itemCount:
-                                                  snaps.data!.docs.length,
-                                              snapshotData: snaps.data!.docs,
-                                              //
-                                              orderID: snapshot.data!
-                                                  .docs[index].reference.id,
-                                              orderBy: this.uid,
-                                              dateCom: snapshot
-                                                  .data!.docs[index]
-                                                  .get('orderTime'),
-                                            )
-                                          : Center(
-                                              child: CircularProgressIndicator(
-                                              color: Colors.green,
-                                            ));
-                                    });
+
+                                var dataMap = snapshot.data!.docs[index];
+                                List listCart = dataMap.get('userCartList');
+
+                                return snapshot.hasData
+                                    ? ClientOrderCard(
+                                        itemCount: listCart.length,
+                                        snapshotData: listCart,
+                                        //
+                                        orderID: dataMap.reference.id,
+                                        orderBy: this.uid,
+                                        dateCom: dataMap.get('orderTime'),
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator(
+                                        color: Colors.green,
+                                      ));
                               });
                         })
                   ],

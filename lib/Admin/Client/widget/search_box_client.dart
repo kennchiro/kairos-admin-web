@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:web_firebase/Admin/Client/widget/search_client.dart';
 import 'package:web_firebase/Widgets/colors.dart';
 
 class SearchDelegateClient extends SliverPersistentHeaderDelegate {

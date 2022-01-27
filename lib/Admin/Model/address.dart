@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddressModel{
-  String? name;
-  String? phoneNumber;
-  String? flatNumber;
-  String? city;
-  String? quartier;
+  String name;
+  String phoneNumber;
+  String flatNumber;
+  String city;
+  String quartier;
 
    AddressModel({
-     this.name,
-     this.phoneNumber,
-     this.flatNumber,
-     this.city,
-     this.quartier,
+     required this.name,
+     required this.phoneNumber,
+     required this.flatNumber,
+     required this.city,
+     required this.quartier,
     });
     
   factory AddressModel.fromDocument(DocumentSnapshot doc) {
